@@ -1,25 +1,67 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
-function App() {
+const App = () => {
+  const [data, setData]= useState([]);
+
+  const getCovidData = async () => {
+    const res = await fetch(
+      "https://coronavirus-19-api.herokuapp.com/countries"
+    );
+    const actualData = await res.json();
+    setData(actualData)
+  };
+
+  useEffect(() => {
+    getCovidData();
+  }, []);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <div className="container-fluid mt-5">
+        <div className="main-heading mb-5 text-center">
+          <h1>
+            <span className="font-weight-bold"> Pakistan </span> Covid-19 Report
+            Card
+          </h1>
+        </div>
+        <div className="responsive-table">
+          <table className="table table-hover">
+            <thead className="thead-dark">
+              <tr>
+                <th> Country </th>
+                <th> Cases </th>
+                <th> Today Cases </th>
+                <th> Deaths </th>
+                <th> Today Deaths </th>
+                <th> Recovered </th>
+                <th> Active </th>
+                <th> Critical </th>
+                <th> Total Tests </th>
+              </tr>
+            </thead>
+            <tbody>
+            { data.map((curElement, idx)=>{
+              return(
+                <tr key={idx}>
+                <td> {curElement.country}</td>
+                <td> {curElement.active} </td>
+                <td> {curElement.todayCases} </td>
+                <td> {curElement.deaths} </td>
+                <td> {curElement.todayDeaths} </td>
+                <td> {curElement.recovered} </td>
+                <td> {curElement.active} </td>
+                <td> {curElement.critical} </td>
+                <td> {curElement.totalTests} </td>
+              </tr>
+              )
+            })}
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </>
   );
-}
+};
 
 export default App;
