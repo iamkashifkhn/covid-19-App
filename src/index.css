@@ -12,8 +12,17 @@
 
   box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.3);
 }
-tr:hover{
+thead tr:nth-child(1):hover{
+  background-color: black;
+}
+td:nth-child(odd):hover{
   background-color: #64f070;
+}
+td:nth-child(even):hover{
+  background-color: #64f070;
+}
+td:nth-child(4):hover{
+  background-color: rgb(241, 138, 138);
 }
 .thead-dark{
   font-weight: bold;
@@ -23,4 +32,10 @@ tr:hover{
 }
 td:hover{
   background-color: yellow;
+  cursor: pointer;
+}
+.form-control{
+  margin-top: 50px;
+  margin-bottom: 20px;
+  width: 40%;
 }

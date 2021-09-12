@@ -3,7 +3,7 @@ import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 const App = () => {
   const [data, setData]= useState([]);
-
+  const [searchTerm, setSearchTerm]= useState('');
   const getCovidData = async () => {
     const res = await fetch(
       "https://coronavirus-19-api.herokuapp.com/countries"
@@ -24,8 +24,16 @@ const App = () => {
             Card
           </h1>
         </div>
+        <input
+          type="text"
+          placeholder="search"
+          className="form-control"
+          onChange={(e)=>{
+            setSearchTerm(e.target.value)
+          }}
+        />
         <div className="responsive-table">
-          <table className="table table-hover">
+          <table className="table table-hover table-bordered">
             <thead className="thead-dark">
               <tr>
                 <th> Country </th>
@@ -40,7 +48,13 @@ const App = () => {
               </tr>
             </thead>
             <tbody>
-            { data.map((curElement, idx)=>{
+            { data.filter((val)=>{
+              if(val.country.toLowerCase().includes(searchTerm.toLowerCase())){
+                return val;
+              }else{
+                return console.log(val);
+              }
+            }).map((curElement, idx)=>{
               return(
                 <tr key={idx}>
                 <td> {curElement.country}</td>
